@@ -38,13 +38,24 @@ function App() {
   }
 
   const handleReset = () => {
-    setSearchParams(prev => {
-      prev.delete('name')
-      return prev
-    })
     setYesClicked(false)
-    setName('')
     setNoCountPress(0)
+    let queryName = searchParams.get('name')
+    if (!queryName) {
+      queryName = prompt('Enter the name of your Valentine')
+      if (queryName === null || queryName === '') return
+      setSearchParams(prev => {
+        prev.set('name', queryName)
+        return prev
+      })
+      setName(queryName)
+    } else {
+      setSearchParams(prev => {
+        prev.delete('name')
+        return prev
+      })
+      setName('')
+    }
   }
 
   const phrases = [
